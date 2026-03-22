@@ -5,9 +5,9 @@ public class GUI {
     private Colors color = new Colors();
     private JPanel panel = new JPanel();
     private JFrame frame = new JFrame();
+    private JPanel mainPanel = new JPanel(new GridBagLayout());
 
     public void runGUI() {
-        GUI start = new GUI();
         panel.setBackground(color.nightBlue);
         panel.setLayout(new BorderLayout());
 
@@ -21,7 +21,6 @@ public class GUI {
         title.setForeground(color.iceWhite);
         title.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
-        JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBackground(color.nightBlue);
 
         JButton access = new JButton("Accedi");
@@ -32,7 +31,7 @@ public class GUI {
         access.setFocusPainted(false);
         access.setBorderPainted(false);
         access.addActionListener(e -> {
-            start.AccessPart();
+            AccessPart();
         });
 
         panel.add(title, BorderLayout.NORTH);
@@ -45,6 +44,17 @@ public class GUI {
     }
 
     public void AccessPart() {
-        System.out.println("Accesso...");
+        panel.removeAll();
+        mainPanel.removeAll();
+
+        JLabel label = new JLabel("Benvenuto!", SwingConstants.CENTER);
+        label.setForeground(color.iceWhite);
+        label.setFont(new Font("Arial", Font.BOLD, 24));
+        mainPanel.add(label);
+
+        panel.add(mainPanel);
+
+        panel.revalidate();
+        mainPanel.repaint();
     }
 }
