@@ -2,10 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GUI {
+    private Colors color = new Colors();
+    private JPanel panel = new JPanel();
+    private JFrame frame = new JFrame();
+
     public void runGUI() {
-        Colors color = new Colors();
-        JPanel panel = new JPanel();
-        JFrame frame = new JFrame();
+        GUI start = new GUI();
         panel.setBackground(color.nightBlue);
         panel.setLayout(new BorderLayout());
 
@@ -29,6 +31,9 @@ public class GUI {
         access.setPreferredSize(new Dimension(200, 30));
         access.setFocusPainted(false);
         access.setBorderPainted(false);
+        access.addActionListener(e -> {
+            start.AccessPart();
+        });
 
         panel.add(title, BorderLayout.NORTH);
         panel.add(mainPanel);
@@ -37,5 +42,9 @@ public class GUI {
 
         frame.add(panel);
         frame.setVisible(true);
+    }
+
+    public void AccessPart() {
+        System.out.println("Accesso...");
     }
 }
