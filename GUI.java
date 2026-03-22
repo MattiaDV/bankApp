@@ -47,10 +47,10 @@ public class GUI {
         panel.removeAll();
         mainPanel.removeAll();
 
-        JLabel label = new JLabel("Benvenuto!", SwingConstants.CENTER);
+        JLabel label = new JLabel("BancusMax", SwingConstants.NORTH);
         label.setForeground(color.iceWhite);
         label.setFont(new Font("Arial", Font.BOLD, 24));
-        mainPanel.add(label);
+        panel.add(label);
 
         panel.add(mainPanel);
 
