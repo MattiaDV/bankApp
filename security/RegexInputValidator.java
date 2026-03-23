@@ -19,8 +19,17 @@ public class RegexInputValidator {
         return true;
     }
 
+    private boolean passwordValidator(String pasw) {
+        if (pasw == null || pasw.length() < 8 || pasw.length() > 30 || pasw.isEmpty()) {
+            throw new IllegalArgumentException("Errore input");
+        }
+
+        return true;
+    }
+
     public boolean checkerDatas(String email, String pasw) {
         emailValidator(email);
+        passwordValidator(pasw);
         return true;
     }
 }

@@ -1,7 +1,5 @@
 import javax.swing.*;
-
 import security.RegexInputValidator;
-
 import java.awt.*;
 
 public class AccessPart {
@@ -80,9 +78,6 @@ public class AccessPart {
             }
         });
 
-        panel.revalidate();
-        mainPanel.repaint();
-
         panel.add(mainPanel);
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(accType_label);
@@ -98,5 +93,8 @@ public class AccessPart {
         mainPanel.add(password);
         mainPanel.add(Box.createVerticalStrut(40));
         mainPanel.add(access_button);
+
+        panel.revalidate();
+        mainPanel.repaint();
     }
 }
