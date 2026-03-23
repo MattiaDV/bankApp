@@ -1,11 +1,16 @@
+package Pages;
 import javax.swing.*;
+
 import security.RegexInputValidator;
+import style.Colors;
+
 import java.awt.*;
 
 public class AccessPart {
     private final Colors color = new Colors();
     private final String[] accountType = {"Bank", "People"};
     private final RegexInputValidator validator = new RegexInputValidator();
+    private final AccountPage userPage = new AccountPage();
 
     public void accessPart(JPanel panel, JPanel mainPanel) {
         panel.removeAll();
@@ -17,7 +22,6 @@ public class AccessPart {
         label.setForeground(color.iceWhite);
         label.setFont(new Font("Arial", Font.BOLD, 24));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panel.add(label, BorderLayout.NORTH);
 
         JLabel accType_label = new JLabel("Tipo di account: ");
         accType_label.setFont(new Font("Arial", Font.BOLD, 14));
@@ -73,11 +77,13 @@ public class AccessPart {
             try {
                 validator.checkerDatas(email.getText(), pasw_val);
                 System.out.println("Dati checkkati correttamente!");
+                userPage.accountPage(panel, mainPanel);
             } catch (IllegalArgumentException ex) {
                 System.out.println("Errore: Input non valido");
             }
         });
 
+        panel.add(label, BorderLayout.NORTH);
         panel.add(mainPanel);
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(accType_label);

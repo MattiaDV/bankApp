@@ -1,3 +1,4 @@
+package style;
 import java.awt.*;
 
 public class Colors {

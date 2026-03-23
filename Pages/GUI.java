@@ -1,4 +1,8 @@
+package Pages;
 import javax.swing.*;
+
+import style.Colors;
+
 import java.awt.*;
 
 public class GUI {
