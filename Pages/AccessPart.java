@@ -101,6 +101,6 @@ public class AccessPart {
         mainPanel.add(access_button);
 
         panel.revalidate();
-        mainPanel.repaint();
+        panel.repaint();
     }
 }
