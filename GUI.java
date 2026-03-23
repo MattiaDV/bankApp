@@ -6,6 +6,7 @@ public class GUI {
     private JPanel panel = new JPanel();
     private JFrame frame = new JFrame();
     private JPanel mainPanel = new JPanel(new GridBagLayout());
+    private AccessPart access_part_new = new AccessPart();
 
     public void runGUI() {
         panel.setBackground(color.nightBlue);
@@ -31,7 +32,7 @@ public class GUI {
         access.setFocusPainted(false);
         access.setBorderPainted(false);
         access.addActionListener(e -> {
-            AccessPart();
+            access_part_new.accessPart(panel, mainPanel);
         });
 
         panel.add(title, BorderLayout.NORTH);
@@ -41,20 +42,5 @@ public class GUI {
 
         frame.add(panel);
         frame.setVisible(true);
-    }
-
-    public void AccessPart() {
-        panel.removeAll();
-        mainPanel.removeAll();
-
-        JLabel label = new JLabel("BancusMax", SwingConstants.CENTER);
-        label.setForeground(color.iceWhite);
-        label.setFont(new Font("Arial", Font.BOLD, 24));
-        panel.add(label, BorderLayout.NORTH);
-
-        panel.add(mainPanel);
-
-        panel.revalidate();
-        mainPanel.repaint();
     }
 }
