@@ -7,6 +7,7 @@ import security.RegexInputValidator;
 import DataBase.Registration;
 
 public class BankAccount {
+    private final String[] acc_tye = {"user", "bank"};
     private final Colors color = new Colors();
     private final BankFunction accFunction = new BankFunction();
     private final RegexInputValidator checker = new RegexInputValidator();
@@ -28,6 +29,12 @@ public class BankAccount {
         add_label.setFont(new Font("Arial", Font.BOLD, 14));
         add_label.setForeground(color.iceWhite);
         add_label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JComboBox<String> accType = new JComboBox<>(acc_tye);
+        accType.setPreferredSize(new Dimension(200, 30));
+        accType.setMaximumSize(new Dimension(200, 30));
+        accType.setMinimumSize(new Dimension(200, 30));
+        accType.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel email_label = new JLabel("Email: ");
         email_label.setFont(new Font("Arial", Font.BOLD, 14));
@@ -63,10 +70,10 @@ public class BankAccount {
         create_button.addActionListener(e -> {
             String pasw_val = new String(password.getPassword());
             try {
-                boolean val = checker.checkerDatasRegistration(email.getText(), pasw_val, "user");
+                boolean val = checker.checkerDatasRegistration(email.getText(), pasw_val, accType.getSelectedItem().toString());
                 if (val) {
                     try {
-                        reg.registerUser(email.getText(), pasw_val, "user");
+                        reg.registerUser(email.getText(), pasw_val, accType.getSelectedItem().toString());
                         System.out.println("Utente registrato!");
                     } catch (Exception err) {
                         System.out.println("Impossibile registrare");
@@ -107,6 +114,8 @@ public class BankAccount {
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(title);
         mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(accType);
+        mainPanel.add(Box.createVerticalStrut(5));
         mainPanel.add(add_label);
         mainPanel.add(Box.createVerticalStrut(5));
         mainPanel.add(email_label);

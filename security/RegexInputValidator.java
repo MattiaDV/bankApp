@@ -76,7 +76,7 @@ public class RegexInputValidator {
     }
 
     private boolean checkerRoleForUser(String role) {
-        if (role.isEmpty() || role == null || role != "user") {
+        if (role.isEmpty() || role == null) {
             throw new IllegalArgumentException("input non valido!");
         }
 
