@@ -1,16 +1,19 @@
 @echo off
 REM Compilazione
-javac -cp ".;DataBase/postgresql-42.7.9.jar" DataBase/DBconnection.java
-javac -cp ".;DataBase/postgresql-42.7.9.jar" Function/AccountFunction.java
-javac -cp ".;DataBase/postgresql-42.7.9.jar" Function/BankFunction.java
-javac -cp ".;DataBase/postgresql-42.7.9.jar" Pages/AccessPart.java
-javac -cp ".;DataBase/postgresql-42.7.9.jar" Pages/AccountPage.java
-javac -cp ".;DataBase/postgresql-42.7.9.jar" Pages/BankAccount.java
-javac -cp ".;DataBase/postgresql-42.7.9.jar" Pages/GUI.java
-javac -cp ".;DataBase/postgresql-42.7.9.jar" security/RegexInputValidator.java
-javac -cp ".;DataBase/postgresql-42.7.9.jar" style/Colors.java
-javac -cp ".;DataBase/postgresql-42.7.9.jar" Main.java
+set CP=.;DataBase/postgresql-42.7.9.jar;DataBase/jbcrypt-0.4.jar
+
+javac -cp "%CP%" DataBase/DBconnection.java
+javac -cp "%CP%" DataBase/Registration.java
+javac -cp "%CP%" Function/AccountFunction.java
+javac -cp "%CP%" Function/BankFunction.java
+javac -cp "%CP%" Pages/AccessPart.java
+javac -cp "%CP%" Pages/AccountPage.java
+javac -cp "%CP%" Pages/BankAccount.java
+javac -cp "%CP%" Pages/GUI.java
+javac -cp "%CP%" security/RegexInputValidator.java
+javac -cp "%CP%" style/Colors.java
+javac -cp "%CP%" Main.java
 
 REM Esecuzione
-java -cp ".;DataBase/postgresql-42.7.9.jar" Main
+java -cp "%CP%" Main
 pause

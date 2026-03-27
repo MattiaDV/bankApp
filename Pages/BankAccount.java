@@ -3,10 +3,14 @@ import javax.swing.*;
 import java.awt.*;
 import style.Colors;
 import Function.BankFunction;
+import security.RegexInputValidator;
+import DataBase.Registration;
 
 public class BankAccount {
     private final Colors color = new Colors();
     private final BankFunction accFunction = new BankFunction();
+    private final RegexInputValidator checker = new RegexInputValidator();
+    private final Registration reg = new Registration();
     
     public void bankAccount(JPanel panel, JPanel mainPanel) {
         panel.removeAll();
@@ -19,6 +23,59 @@ public class BankAccount {
         title.setFont(new Font("Arial", Font.BOLD, 24));
         title.setForeground(color.iceWhite);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel add_label = new JLabel("Add new user");
+        add_label.setFont(new Font("Arial", Font.BOLD, 14));
+        add_label.setForeground(color.iceWhite);
+        add_label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel email_label = new JLabel("Email: ");
+        email_label.setFont(new Font("Arial", Font.BOLD, 14));
+        email_label.setForeground(color.iceWhite);
+        email_label.setMaximumSize(new Dimension(200, 30));
+        email_label.setMinimumSize(new Dimension(200, 30));
+        email_label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JTextField email = new JTextField();
+        email.setPreferredSize(new Dimension(200, 30));
+        email.setMaximumSize(new Dimension(200, 30));
+        email.setMinimumSize(new Dimension(200, 30));
+        email.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel pasw_label = new JLabel("Password: ");
+        pasw_label.setFont(new Font("Arial", Font.BOLD, 14));
+        pasw_label.setForeground(color.iceWhite);
+        pasw_label.setMaximumSize(new Dimension(200, 30));
+        pasw_label.setMinimumSize(new Dimension(200, 30));
+        pasw_label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JPasswordField password = new JPasswordField();
+        password.setPreferredSize(new Dimension(200, 30));
+        password.setMaximumSize(new Dimension(200, 30));
+        password.setMinimumSize(new Dimension(200, 30));
+        password.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JButton create_button = new JButton("Create user");
+        create_button.setForeground(color.iceWhite);
+        create_button.setBackground(color.electricBlue);
+        create_button.setMaximumSize(new Dimension(200, 30));
+        create_button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        create_button.addActionListener(e -> {
+            String pasw_val = new String(password.getPassword());
+            try {
+                boolean val = checker.checkerDatasRegistration(email.getText(), pasw_val, "user");
+                if (val) {
+                    try {
+                        reg.registerUser(email.getText(), pasw_val, "user");
+                        System.out.println("Utente registrato!");
+                    } catch (Exception err) {
+                        System.out.println("Impossibile registrare");
+                    }
+                }
+            } catch (IllegalArgumentException er) {
+                System.out.println("Input non valido");
+            }
+        });
 
         JButton button_delete = new JButton("Delete account");
         button_delete.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -49,6 +106,18 @@ public class BankAccount {
 
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(title);
+        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(add_label);
+        mainPanel.add(Box.createVerticalStrut(5));
+        mainPanel.add(email_label);
+        mainPanel.add(Box.createVerticalStrut(5));
+        mainPanel.add(email);
+        mainPanel.add(Box.createVerticalStrut(5));
+        mainPanel.add(pasw_label);
+        mainPanel.add(Box.createVerticalStrut(5));
+        mainPanel.add(password);
+        mainPanel.add(Box.createVerticalStrut(5));
+        mainPanel.add(create_button);
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(button_block);
         mainPanel.add(Box.createVerticalStrut(20));
