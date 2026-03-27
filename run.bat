@@ -1,2 +1,10 @@
-javac Main.java 
+javac Function/AccountFunction.java
+javac Function/BankFunction.java
+javac Pages/AccessPart.java
+javac Pages/AccountPage.java
+javac Pages/BankAccount.java
+javac Pages/GUI.java
+javac security/RegexInputValidator.java
+javac style/Colors.java
+javac Main.java
 java Main

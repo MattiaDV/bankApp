@@ -11,6 +11,7 @@ public class AccessPart {
     private final String[] accountType = {"Bank", "People"};
     private final RegexInputValidator validator = new RegexInputValidator();
     private final AccountPage userPage = new AccountPage();
+    private final BankAccount bankAcc = new BankAccount();
 
     public void accessPart(JPanel panel, JPanel mainPanel) {
         panel.removeAll();
@@ -77,7 +78,13 @@ public class AccessPart {
             try {
                 validator.checkerDatas(email.getText(), pasw_val);
                 System.out.println("Dati checkkati correttamente!");
-                userPage.accountPage(panel, mainPanel);
+                if ("People".equals(accType.getSelectedItem())) {
+                    userPage.accountPage(panel, mainPanel);
+                } else if ("Bank".equals(accType.getSelectedItem())) {
+                    bankAcc.bankAccount(panel, mainPanel);
+                } else {
+                    throw new IllegalArgumentException("Errore nella scelta del tipo dell'utente!");
+                }
             } catch (IllegalArgumentException ex) {
                 System.out.println("Errore: Input non valido");
             }

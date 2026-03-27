@@ -47,7 +47,7 @@ public class AccountPage {
             accFunction.transferCash(0);
         });
 
-        JButton button_history = new JButton("Withdraw");
+        JButton button_history = new JButton("History");
         button_history.setAlignmentX(Component.CENTER_ALIGNMENT);
         button_history.setMaximumSize(new Dimension(200, 30));
         button_history.setForeground(color.iceWhite);
