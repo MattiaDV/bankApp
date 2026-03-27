@@ -20,22 +20,52 @@ public class AccountPage {
         title.setForeground(color.iceWhite);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton bottone_test = new JButton("Test");
-        bottone_test.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bottone_test.setMaximumSize(new Dimension(200, 30));
-        bottone_test.setForeground(color.iceWhite);
-        bottone_test.setBackground(color.electricBlue);
-        bottone_test.addActionListener(e -> {
-            accFunction.transferCash(10);
+        JButton button_withdraw = new JButton("Withdraw");
+        button_withdraw.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button_withdraw.setMaximumSize(new Dimension(200, 30));
+        button_withdraw.setForeground(color.iceWhite);
+        button_withdraw.setBackground(color.electricBlue);
+        button_withdraw.addActionListener(e -> {
             accFunction.withDraw(10);
-            accFunction.payOperation(10);
+        });
+
+        JButton button_pay = new JButton("Pay");
+        button_pay.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button_pay.setMaximumSize(new Dimension(200, 30));
+        button_pay.setForeground(color.iceWhite);
+        button_pay.setBackground(color.electricBlue);
+        button_pay.addActionListener(e -> {
+            accFunction.payOperation(0);
+        });
+
+        JButton button_trasnfer = new JButton("Transfer");
+        button_trasnfer.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button_trasnfer.setMaximumSize(new Dimension(200, 30));
+        button_trasnfer.setForeground(color.iceWhite);
+        button_trasnfer.setBackground(color.electricBlue);
+        button_trasnfer.addActionListener(e -> {
+            accFunction.transferCash(0);
+        });
+
+        JButton button_history = new JButton("Withdraw");
+        button_history.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button_history.setMaximumSize(new Dimension(200, 30));
+        button_history.setForeground(color.iceWhite);
+        button_history.setBackground(color.electricBlue);
+        button_history.addActionListener(e -> {
             accFunction.viewHistory();
         });
 
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(title);
         mainPanel.add(Box.createVerticalStrut(20));
-        mainPanel.add(bottone_test);
+        mainPanel.add(button_withdraw);
+        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(button_trasnfer);
+        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(button_pay);
+        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(button_history);
 
         panel.add(mainPanel, BorderLayout.CENTER);
 
