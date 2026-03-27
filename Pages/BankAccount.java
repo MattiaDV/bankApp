@@ -114,9 +114,9 @@ public class BankAccount {
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(title);
         mainPanel.add(Box.createVerticalStrut(20));
-        mainPanel.add(accType);
-        mainPanel.add(Box.createVerticalStrut(5));
         mainPanel.add(add_label);
+        mainPanel.add(Box.createVerticalStrut(5));
+        mainPanel.add(accType);
         mainPanel.add(Box.createVerticalStrut(5));
         mainPanel.add(email_label);
         mainPanel.add(Box.createVerticalStrut(5));
