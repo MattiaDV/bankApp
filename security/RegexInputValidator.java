@@ -35,23 +35,24 @@ public class RegexInputValidator {
 
         final String query = "SELECT email, password FROM users WHERE email = ? AND password = ? AND role = ?";
 
+        if ("People".equals(role)) {
+            role = "user";
+        } else if ("Bank".equals(role)) {
+            role = "bank";
+        } else {
+            throw new IllegalArgumentException("Input non valido");
+        }
+
         try (Connection conn = db_check.getConn();
             PreparedStatement stmt = conn.prepareStatement(query)) {
-            if (role == "People") {
-                role = "user";
-            } else if (role == "Bank") {
-                role = "bank";
-            }
             stmt.setString(1, email);
             stmt.setString(2, pasw);
             stmt.setString(3, role);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    conn.close();
                     return true;
                 }
             }
-            conn.close();
         } catch (SQLException e) {
             System.out.println("Errore: " + e.getMessage());
             throw new IllegalArgumentException("input non valido!");
