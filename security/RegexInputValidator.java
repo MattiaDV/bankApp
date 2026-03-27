@@ -28,17 +28,23 @@ public class RegexInputValidator {
         return true;
     }
 
-    private boolean passwordValidator(String email, String pasw) {
+    private boolean passwordValidator(String email, String pasw, String role) {
         if (pasw == null || pasw.length() < 8 || pasw.length() > 30 || pasw.isEmpty()) {
             throw new IllegalArgumentException("Errore input");
         }
 
-        final String query = "SELECT email, password FROM users WHERE email = ? AND password = ?";
+        final String query = "SELECT email, password FROM users WHERE email = ? AND password = ? AND role = ?";
 
         try (Connection conn = db_check.getConn();
             PreparedStatement stmt = conn.prepareStatement(query)) {
+            if (role == "People") {
+                role = "user";
+            } else if (role == "Bank") {
+                role = "bank";
+            }
             stmt.setString(1, email);
             stmt.setString(2, pasw);
+            stmt.setString(3, role);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     conn.close();
@@ -54,9 +60,9 @@ public class RegexInputValidator {
         throw new IllegalArgumentException("input non valido");
     }
 
-    public boolean checkerDatas(String email, String pasw) {
+    public boolean checkerDatas(String email, String pasw, String role) {
         emailValidator(email);
-        passwordValidator(email, pasw);
+        passwordValidator(email, pasw, role);
         return true;
     }
 }

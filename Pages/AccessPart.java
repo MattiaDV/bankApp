@@ -76,7 +76,7 @@ public class AccessPart {
         access_button.addActionListener(e -> {
             String pasw_val = new String(password.getPassword());
             try {
-                boolean val = validator.checkerDatas(email.getText(), pasw_val);
+                boolean val = validator.checkerDatas(email.getText(), pasw_val, accType.getSelectedItem().toString());
                 System.out.println("Dati checkkati correttamente!");
                 if ("People".equals(accType.getSelectedItem()) && val) {
                     userPage.accountPage(panel, mainPanel);
