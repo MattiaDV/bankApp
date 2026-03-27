@@ -76,11 +76,11 @@ public class AccessPart {
         access_button.addActionListener(e -> {
             String pasw_val = new String(password.getPassword());
             try {
-                validator.checkerDatas(email.getText(), pasw_val);
+                boolean val = validator.checkerDatas(email.getText(), pasw_val);
                 System.out.println("Dati checkkati correttamente!");
-                if ("People".equals(accType.getSelectedItem())) {
+                if ("People".equals(accType.getSelectedItem()) && val) {
                     userPage.accountPage(panel, mainPanel);
-                } else if ("Bank".equals(accType.getSelectedItem())) {
+                } else if ("Bank".equals(accType.getSelectedItem()) && val) {
                     bankAcc.bankAccount(panel, mainPanel);
                 } else {
                     throw new IllegalArgumentException("Errore nella scelta del tipo dell'utente!");

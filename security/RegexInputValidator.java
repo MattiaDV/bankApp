@@ -1,6 +1,15 @@
 package security;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import DataBase.DBconnection;
+
 public class RegexInputValidator {
+    private final DBconnection db_check = new DBconnection();
+
     private boolean emailValidator(String email) {
         if (email == null) {
             throw new IllegalArgumentException("Errore input");
@@ -19,17 +28,35 @@ public class RegexInputValidator {
         return true;
     }
 
-    private boolean passwordValidator(String pasw) {
+    private boolean passwordValidator(String email, String pasw) {
         if (pasw == null || pasw.length() < 8 || pasw.length() > 30 || pasw.isEmpty()) {
             throw new IllegalArgumentException("Errore input");
         }
 
-        return true;
+        final String query = "SELECT email, password FROM users WHERE email = ? AND password = ?";
+
+        try (Connection conn = db_check.getConn();
+            PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, email);
+            stmt.setString(2, pasw);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    conn.close();
+                    return true;
+                }
+            }
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Errore: " + e.getMessage());
+            throw new IllegalArgumentException("input non valido!");
+        }
+
+        throw new IllegalArgumentException("input non valido");
     }
 
     public boolean checkerDatas(String email, String pasw) {
         emailValidator(email);
-        passwordValidator(pasw);
+        passwordValidator(email, pasw);
         return true;
     }
 }
