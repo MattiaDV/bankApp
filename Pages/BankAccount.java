@@ -111,6 +111,15 @@ public class BankAccount {
             accFunction.view();
         });
 
+        JButton logout_button = new JButton("Log out");
+        logout_button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logout_button.setMaximumSize(new Dimension(200, 30));
+        logout_button.setForeground(color.iceWhite);
+        logout_button.setBackground(color.red);
+        logout_button.addActionListener(e -> {
+            new AccessPart().accessPart(panel, mainPanel);
+        });
+
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(title);
         mainPanel.add(Box.createVerticalStrut(20));
@@ -133,6 +142,8 @@ public class BankAccount {
         mainPanel.add(button_delete);
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(button_view);
+        mainPanel.add(Box.createVerticalStrut(40));
+        mainPanel.add(logout_button);
 
         panel.add(mainPanel, BorderLayout.CENTER);
 

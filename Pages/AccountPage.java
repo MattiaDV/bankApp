@@ -56,6 +56,15 @@ public class AccountPage {
             accFunction.viewHistory();
         });
 
+        JButton logout_button = new JButton("Log out");
+        logout_button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logout_button.setMaximumSize(new Dimension(200, 30));
+        logout_button.setForeground(color.iceWhite);
+        logout_button.setBackground(color.red);
+        logout_button.addActionListener(e -> {
+            new AccessPart().accessPart(panel, mainPanel);
+        });
+
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(title);
         mainPanel.add(Box.createVerticalStrut(20));
@@ -66,6 +75,8 @@ public class AccountPage {
         mainPanel.add(button_pay);
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(button_history);
+        mainPanel.add(Box.createVerticalStrut(40));
+        mainPanel.add(logout_button);
 
         panel.add(mainPanel, BorderLayout.CENTER);
 
