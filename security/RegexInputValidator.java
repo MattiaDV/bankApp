@@ -11,7 +11,7 @@ import DataBase.DBconnection;
 public class RegexInputValidator {
     private final DBconnection db_check = new DBconnection();
 
-    private boolean emailValidator(String email) {
+    public boolean emailValidator(String email) {
         if (email == null) {
             throw new IllegalArgumentException("Errore input");
         }
@@ -27,6 +27,23 @@ public class RegexInputValidator {
         }
 
         return true;
+    }
+
+    public boolean emailExist(String email) {
+        String query = "SELECT 1 FROM users WHERE email = ?";
+        try (Connection conn = db_check.getConn(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, email);
+
+            ResultSet ris = stmt.executeQuery();
+
+            if (ris.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch(SQLException e) {
+            return false;
+        }
     }
 
     private boolean passwordChecker(String pasw) {

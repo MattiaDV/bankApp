@@ -28,8 +28,24 @@ public class AccountFunction {
         }
     }
 
-    public void transferCash(float valore) {
-        System.out.println("Valore: " + valore);
+    public void transferCash(BigDecimal valore, String mittente, String destinatario) {
+        payOperation(valore, mittente);
+        String query = "UPDATE users SET cash = cash + ? WHERE email = ?";
+
+        try (Connection conn = db.getConn(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setBigDecimal(1, valore);
+            stmt.setString(2, destinatario);
+
+            int ris = stmt.executeUpdate();
+
+            if (ris > 0) {
+                System.out.println("Trasferimento avvenuto con successo!");
+            } else {
+                System.out.println("Trasferimento non riuscito!");
+            }
+        } catch(SQLException e) {
+            System.out.println("Trasferimento non riuscito!");
+        }
     }
 
     public void payOperation(BigDecimal valore, String email) {

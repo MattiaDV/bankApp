@@ -1,9 +1,16 @@
 package Pages;
 import javax.swing.*;
 import java.awt.*;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import style.Colors;
 import Function.BankFunction;
 import security.RegexInputValidator;
+import DataBase.DBconnection;
 import DataBase.Registration;
 
 public class BankAccount {
@@ -12,6 +19,24 @@ public class BankAccount {
     private final BankFunction accFunction = new BankFunction();
     private final RegexInputValidator checker = new RegexInputValidator();
     private final Registration reg = new Registration();
+    private final DBconnection db = new DBconnection();
+
+    private BigDecimal getCash(String email) {
+        String query = "SELECT cash FROM users WHERE email = ?";
+        try (Connection conn = db.getConn(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, email);
+
+            ResultSet ris = stmt.executeQuery();
+
+            if (ris.next()) {
+                return ris.getBigDecimal("cash");
+            }
+        } catch (SQLException er) {
+            System.out.println("Errore nel DB: " + er.getMessage());
+        }
+
+        return BigDecimal.ZERO;
+    }
     
     public void bankAccount(JPanel panel, JPanel mainPanel, String email_user) {
         panel.removeAll();
@@ -24,6 +49,11 @@ public class BankAccount {
         title.setFont(new Font("Arial", Font.BOLD, 24));
         title.setForeground(color.iceWhite);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel cashTotal = new JLabel("Cash: " + getCash(email_user).toString());
+        cashTotal.setFont(new Font("Arial", Font.BOLD, 24));
+        cashTotal.setForeground(color.iceWhite);
+        cashTotal.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel add_label = new JLabel("Add new user");
         add_label.setFont(new Font("Arial", Font.BOLD, 14));
@@ -122,6 +152,8 @@ public class BankAccount {
 
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(title);
+        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(cashTotal);
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(add_label);
         mainPanel.add(Box.createVerticalStrut(5));
