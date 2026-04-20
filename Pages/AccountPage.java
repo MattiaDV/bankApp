@@ -1,6 +1,8 @@
 package Pages;
 import javax.swing.*;
 import java.awt.*;
+import java.math.BigDecimal;
+
 import style.Colors;
 import Function.AccountFunction;
 
@@ -8,7 +10,7 @@ public class AccountPage {
     private final Colors color = new Colors();
     private final AccountFunction accFunction = new AccountFunction();
     
-    public void accountPage(JPanel panel, JPanel mainPanel) {
+    public void accountPage(JPanel panel, JPanel mainPanel, String email) {
         panel.removeAll();
         mainPanel.removeAll();
 
@@ -20,14 +22,40 @@ public class AccountPage {
         title.setForeground(color.iceWhite);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        JTextField withdraw_number = new JTextField();
+        withdraw_number.setAlignmentX(Component.CENTER_ALIGNMENT);
+        withdraw_number.setMaximumSize(new Dimension(200, 30));
+        withdraw_number.setForeground(color.iceWhite);
+        withdraw_number.setBackground(color.electricBlue);
+
         JButton button_withdraw = new JButton("Withdraw");
         button_withdraw.setAlignmentX(Component.CENTER_ALIGNMENT);
         button_withdraw.setMaximumSize(new Dimension(200, 30));
         button_withdraw.setForeground(color.iceWhite);
         button_withdraw.setBackground(color.electricBlue);
         button_withdraw.addActionListener(e -> {
-            accFunction.withDraw(10);
+            try {
+                String data_wit = withdraw_number.getText();
+                if (data_wit == null || data_wit.isEmpty()) {
+                    throw new IllegalArgumentException("Errore nell'input!");
+                }
+
+                if (data_wit.matches("\\d+(\\.\\d{1,2})?")) {
+                    accFunction.withDraw(new BigDecimal(data_wit), email);
+                } else {
+                    throw new IllegalArgumentException("Errore nell'input!");
+                }
+            } catch (IllegalArgumentException err) {
+                System.out.println(err.getMessage());
+                JOptionPane.showMessageDialog(null, err.getMessage());
+            }
         });
+
+        JTextField pay_number = new JTextField();
+        pay_number.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pay_number.setMaximumSize(new Dimension(200, 30));
+        pay_number.setForeground(color.iceWhite);
+        pay_number.setBackground(color.electricBlue);
 
         JButton button_pay = new JButton("Pay");
         button_pay.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -35,7 +63,21 @@ public class AccountPage {
         button_pay.setForeground(color.iceWhite);
         button_pay.setBackground(color.electricBlue);
         button_pay.addActionListener(e -> {
-            accFunction.payOperation(0);
+            try {
+                String data_pay = pay_number.getText();
+                if (data_pay == null || data_pay.isEmpty()) {
+                    throw new IllegalArgumentException("Errore nell'input!");
+                }
+
+                if (data_pay.matches("\\d+(\\.\\d{1,2})?")) {
+                    accFunction.payOperation(new BigDecimal(data_pay), email);
+                } else {
+                    throw new IllegalArgumentException("Errore nell'input!");
+                }
+            } catch (IllegalArgumentException err) {
+                System.out.println(err.getMessage());
+                JOptionPane.showMessageDialog(null, err.getMessage());
+            }
         });
 
         JButton button_trasnfer = new JButton("Transfer");
@@ -47,13 +89,33 @@ public class AccountPage {
             accFunction.transferCash(0);
         });
 
-        JButton button_history = new JButton("History");
-        button_history.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button_history.setMaximumSize(new Dimension(200, 30));
-        button_history.setForeground(color.iceWhite);
-        button_history.setBackground(color.electricBlue);
-        button_history.addActionListener(e -> {
-            accFunction.viewHistory();
+        JTextField recharge_number = new JTextField();
+        recharge_number.setAlignmentX(Component.CENTER_ALIGNMENT);
+        recharge_number.setMaximumSize(new Dimension(200, 30));
+        recharge_number.setForeground(color.iceWhite);
+        recharge_number.setBackground(color.electricBlue);
+
+        JButton button_recharge = new JButton("Recharge");
+        button_recharge.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button_recharge.setMaximumSize(new Dimension(200, 30));
+        button_recharge.setForeground(color.iceWhite);
+        button_recharge.setBackground(color.electricBlue);
+        button_recharge.addActionListener(e -> {
+            try {
+                String data_rec = recharge_number.getText();
+                if (data_rec == null || data_rec.isEmpty()) {
+                    throw new IllegalArgumentException("Errore nell'input!");
+                }
+
+                if (data_rec.matches("\\d+(\\.\\d{1,2})?")) {
+                    accFunction.recharge(new BigDecimal(data_rec), email);
+                } else {
+                    throw new IllegalArgumentException("Errore nell'input!");
+                }
+            } catch (IllegalArgumentException err) {
+                System.out.println(err.getMessage());
+                JOptionPane.showMessageDialog(null, err.getMessage());
+            }
         });
 
         JButton logout_button = new JButton("Log out");
@@ -68,13 +130,19 @@ public class AccountPage {
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(title);
         mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(recharge_number);
+        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(button_recharge);
+        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(withdraw_number);
+        mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(button_withdraw);
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(button_trasnfer);
         mainPanel.add(Box.createVerticalStrut(20));
-        mainPanel.add(button_pay);
+        mainPanel.add(pay_number);
         mainPanel.add(Box.createVerticalStrut(20));
-        mainPanel.add(button_history);
+        mainPanel.add(button_pay);
         mainPanel.add(Box.createVerticalStrut(40));
         mainPanel.add(logout_button);
 

@@ -13,7 +13,7 @@ public class BankAccount {
     private final RegexInputValidator checker = new RegexInputValidator();
     private final Registration reg = new Registration();
     
-    public void bankAccount(JPanel panel, JPanel mainPanel) {
+    public void bankAccount(JPanel panel, JPanel mainPanel, String email_user) {
         panel.removeAll();
         mainPanel.removeAll();
 

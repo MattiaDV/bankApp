@@ -79,9 +79,9 @@ public class AccessPart {
                 boolean val = validator.checkerDatas(email.getText(), pasw_val, accType.getSelectedItem().toString());
                 System.out.println("Dati checkkati correttamente!");
                 if ("People".equals(accType.getSelectedItem()) && val) {
-                    userPage.accountPage(panel, mainPanel);
+                    userPage.accountPage(panel, mainPanel, email.getText());
                 } else if ("Bank".equals(accType.getSelectedItem()) && val) {
-                    bankAcc.bankAccount(panel, mainPanel);
+                    bankAcc.bankAccount(panel, mainPanel, email.getText());
                 } else {
                     throw new IllegalArgumentException("Errore nella scelta del tipo dell'utente!");
                 }
