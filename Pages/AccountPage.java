@@ -70,24 +70,34 @@ public class AccountPage {
                 try {
                     String data_wit = withdraw_number.getText();
                     if (data_wit == null || data_wit.isEmpty()) {
-                        throw new IllegalArgumentException("Errore nell'input!");
+                        JOptionPane.showMessageDialog(null, "Non puoi lasciare il campo vuoto!");
+                        return;
                     }
 
                     if (getCash(email).compareTo(BigDecimal.ZERO) <= 0) {
-                        throw new IllegalArgumentException("Errore nell'input!");
+                        JOptionPane.showMessageDialog(null, "Hai 0 Euro nel tuo account");
+                        return;
+                    }
+
+                    if (getCash(email).compareTo(new BigDecimal(withdraw_number.getText())) < 0) {
+                        JOptionPane.showMessageDialog(null, "Non hai abbastanza fondi!");
+                        return;
                     }
 
                     if (data_wit.matches("\\d+(\\.\\d{1,2})?")) {
                         accFunction.withDraw(new BigDecimal(data_wit), email);
+                        JOptionPane.showMessageDialog(null, "Operazione riuscita!");
                         cashTotal.setText("Cash: " + getCash(email).toString());
                     } else {
-                        throw new IllegalArgumentException("Errore nell'input!");
+                        JOptionPane.showMessageDialog(null, "Errore generale");
+                        return;
                     }
                 } catch (IllegalArgumentException err) {
                     System.out.println(err.getMessage());
                     JOptionPane.showMessageDialog(null, err.getMessage());
                 }
             } else {
+                JOptionPane.showMessageDialog(null, "Non puoi lasciare vuoto il campo");
                 System.out.println("Non puoi lasciare vuoto il campo");
             }
             withdraw_number.setText("");
@@ -109,25 +119,34 @@ public class AccountPage {
                 try {
                     String data_pay = pay_number.getText();
                     if (data_pay == null || data_pay.isEmpty()) {
-                        throw new IllegalArgumentException("Errore nell'input!");
-                        JOptionPane message_no_data = new JOptionPane.showMessageDialog(null, "Non puoi lasciare il campo vuoto!");
+                        JOptionPane.showMessageDialog(null, "Non puoi lasciare il campo vuoto!");
+                        return;
                     }
 
                     if (getCash(email).compareTo(BigDecimal.ZERO) <= 0) {
-                        throw new IllegalArgumentException("Errore nell'input!");
+                        JOptionPane.showMessageDialog(null, "Hai 0 Euro nel tuo account");
+                        return;
+                    }
+
+                    if (getCash(email).compareTo(new BigDecimal(pay_number.getText())) < 0) {
+                        JOptionPane.showMessageDialog(null, "Non hai abbastanza fondi!");
+                        return;
                     }
 
                     if (data_pay.matches("\\d+(\\.\\d{1,2})?")) {
                         accFunction.payOperation(new BigDecimal(data_pay), email);
+                        JOptionPane.showMessageDialog(null, "Operazione riuscita!");
                         cashTotal.setText("Cash: " + getCash(email).toString());
                     } else {
-                        throw new IllegalArgumentException("Errore nell'input!");
+                        JOptionPane.showMessageDialog(null, "Errore generale");
+                        return;
                     }
                 } catch (IllegalArgumentException err) {
                     System.out.println(err.getMessage());
                     JOptionPane.showMessageDialog(null, err.getMessage());
                 }
             } else {
+                JOptionPane.showMessageDialog(null, "Non puoi lasciare vuoto il campo");
                 System.out.println("Non puoi lasciare vuoto il campo");
             }
             pay_number.setText("");
@@ -156,28 +175,39 @@ public class AccountPage {
                     String data_tra = transfer_number.getText();
                     String email_tra = trasnsfer_email.getText();
                     if (data_tra == null || data_tra.isEmpty()) {
-                        throw new IllegalArgumentException("Errore nell'input!");
+                        JOptionPane.showMessageDialog(null, "Non puoi lasciare il campo vuoto!");
+                        return;
                     }
 
                     if (getCash(email).compareTo(BigDecimal.ZERO) <= 0) {
-                        throw new IllegalArgumentException("Errore nell'input!");
+                        JOptionPane.showMessageDialog(null, "Hai 0 Euro nel tuo account");
+                        return;
+                    }
+
+                    if (getCash(email).compareTo(new BigDecimal(transfer_number.getText())) < 0) {
+                        JOptionPane.showMessageDialog(null, "Non hai abbastanza fondi!");
+                        return;
                     }
 
                     if (!riv.emailValidator(email_tra)) {
-                        throw new IllegalArgumentException("Errore nell'input!");
+                        JOptionPane.showMessageDialog(null, "Email incorretta!");
+                        return;
                     }
 
                     if (data_tra.matches("\\d+(\\.\\d{1,2})?") && riv.emailExist(email_tra)) {
                         accFunction.transferCash(new BigDecimal(data_tra), email, email_tra);
+                        JOptionPane.showMessageDialog(null, "Operazione riuscita!");
                         cashTotal.setText("Cash: " + getCash(email).toString());
                     } else {
-                        throw new IllegalArgumentException("Errore nell'input!");
+                        JOptionPane.showMessageDialog(null, "Errore generale");
+                        return;
                     }
                 } catch (IllegalArgumentException err) {
                     System.out.println(err.getMessage());
                     JOptionPane.showMessageDialog(null, err.getMessage());
                 }
             } else {
+                JOptionPane.showMessageDialog(null, "Non puoi lasciare vuoto il campo");
                 System.out.println("Non puoi lasciare vuoto il campo");
             }
             transfer_number.setText("");
@@ -200,21 +230,26 @@ public class AccountPage {
                 try {
                     String data_rec = recharge_number.getText();
                     if (data_rec == null || data_rec.isEmpty()) {
-                        throw new IllegalArgumentException("Errore nell'input!");
+                        JOptionPane.showMessageDialog(null, "Non puoi lasciare il campo vuoto!");
+                        return;
                     }
 
                     if (data_rec.matches("\\d+(\\.\\d{1,2})?")) {
                         accFunction.recharge(new BigDecimal(data_rec), email);
+                        JOptionPane.showMessageDialog(null, "Operazione riuscita!");
                         cashTotal.setText("Cash: " + getCash(email).toString());
                     } else {
-                        throw new IllegalArgumentException("Errore nell'input!");
+                        JOptionPane.showMessageDialog(null, "Errore generale");
+                        return;
                     }
                 } catch (IllegalArgumentException err) {
                     System.out.println(err.getMessage());
                     JOptionPane.showMessageDialog(null, err.getMessage());
                 }
             } else {
+                JOptionPane.showMessageDialog(null, "Non puoi lasciare vuoto il campo");
                 System.out.println("Non puoi lasciare vuoto il campo");
+                return;
             }
             recharge_number.setText("");
         });
