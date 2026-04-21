@@ -110,6 +110,7 @@ public class AccountPage {
                     String data_pay = pay_number.getText();
                     if (data_pay == null || data_pay.isEmpty()) {
                         throw new IllegalArgumentException("Errore nell'input!");
+                        JOptionPane message_no_data = new JOptionPane(null, "Non puoi lasciare il campo vuoto!");
                     }
 
                     if (getCash(email).compareTo(BigDecimal.ZERO) <= 0) {
