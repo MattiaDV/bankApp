@@ -66,26 +66,31 @@ public class AccountPage {
         button_withdraw.setForeground(color.iceWhite);
         button_withdraw.setBackground(color.electricBlue);
         button_withdraw.addActionListener(e -> {
-            try {
-                String data_wit = withdraw_number.getText();
-                if (data_wit == null || data_wit.isEmpty()) {
-                    throw new IllegalArgumentException("Errore nell'input!");
-                }
+            if (!withdraw_number.getText().isEmpty()) {
+                try {
+                    String data_wit = withdraw_number.getText();
+                    if (data_wit == null || data_wit.isEmpty()) {
+                        throw new IllegalArgumentException("Errore nell'input!");
+                    }
 
-                if (getCash(email).compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException("Errore nell'input!");
-                }
+                    if (getCash(email).compareTo(BigDecimal.ZERO) <= 0) {
+                        throw new IllegalArgumentException("Errore nell'input!");
+                    }
 
-                if (data_wit.matches("\\d+(\\.\\d{1,2})?")) {
-                    accFunction.withDraw(new BigDecimal(data_wit), email);
-                    cashTotal.setText("Cash: " + getCash(email).toString());
-                } else {
-                    throw new IllegalArgumentException("Errore nell'input!");
+                    if (data_wit.matches("\\d+(\\.\\d{1,2})?")) {
+                        accFunction.withDraw(new BigDecimal(data_wit), email);
+                        cashTotal.setText("Cash: " + getCash(email).toString());
+                    } else {
+                        throw new IllegalArgumentException("Errore nell'input!");
+                    }
+                } catch (IllegalArgumentException err) {
+                    System.out.println(err.getMessage());
+                    JOptionPane.showMessageDialog(null, err.getMessage());
                 }
-            } catch (IllegalArgumentException err) {
-                System.out.println(err.getMessage());
-                JOptionPane.showMessageDialog(null, err.getMessage());
+            } else {
+                System.out.println("Non puoi lasciare vuoto il campo");
             }
+            withdraw_number.setText("");
         });
 
         JTextField pay_number = new JTextField();
@@ -100,26 +105,31 @@ public class AccountPage {
         button_pay.setForeground(color.iceWhite);
         button_pay.setBackground(color.electricBlue);
         button_pay.addActionListener(e -> {
-            try {
-                String data_pay = pay_number.getText();
-                if (data_pay == null || data_pay.isEmpty()) {
-                    throw new IllegalArgumentException("Errore nell'input!");
-                }
+            if (!pay_number.getText().isEmpty()) {
+                try {
+                    String data_pay = pay_number.getText();
+                    if (data_pay == null || data_pay.isEmpty()) {
+                        throw new IllegalArgumentException("Errore nell'input!");
+                    }
 
-                if (getCash(email).compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException("Errore nell'input!");
-                }
+                    if (getCash(email).compareTo(BigDecimal.ZERO) <= 0) {
+                        throw new IllegalArgumentException("Errore nell'input!");
+                    }
 
-                if (data_pay.matches("\\d+(\\.\\d{1,2})?")) {
-                    accFunction.payOperation(new BigDecimal(data_pay), email);
-                    cashTotal.setText("Cash: " + getCash(email).toString());
-                } else {
-                    throw new IllegalArgumentException("Errore nell'input!");
+                    if (data_pay.matches("\\d+(\\.\\d{1,2})?")) {
+                        accFunction.payOperation(new BigDecimal(data_pay), email);
+                        cashTotal.setText("Cash: " + getCash(email).toString());
+                    } else {
+                        throw new IllegalArgumentException("Errore nell'input!");
+                    }
+                } catch (IllegalArgumentException err) {
+                    System.out.println(err.getMessage());
+                    JOptionPane.showMessageDialog(null, err.getMessage());
                 }
-            } catch (IllegalArgumentException err) {
-                System.out.println(err.getMessage());
-                JOptionPane.showMessageDialog(null, err.getMessage());
+            } else {
+                System.out.println("Non puoi lasciare vuoto il campo");
             }
+            pay_number.setText("");
         });
 
         JTextField trasnsfer_email = new JTextField();
@@ -140,31 +150,37 @@ public class AccountPage {
         button_trasnfer.setForeground(color.iceWhite);
         button_trasnfer.setBackground(color.electricBlue);
         button_trasnfer.addActionListener(e -> {
-            try {
-                String data_tra = transfer_number.getText();
-                String email_tra = trasnsfer_email.getText();
-                if (data_tra == null || data_tra.isEmpty()) {
-                    throw new IllegalArgumentException("Errore nell'input!");
-                }
+            if (!transfer_number.getText().isEmpty() && !trasnsfer_email.getText().isEmpty()) {
+                try {
+                    String data_tra = transfer_number.getText();
+                    String email_tra = trasnsfer_email.getText();
+                    if (data_tra == null || data_tra.isEmpty()) {
+                        throw new IllegalArgumentException("Errore nell'input!");
+                    }
 
-                if (getCash(email).compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException("Errore nell'input!");
-                }
+                    if (getCash(email).compareTo(BigDecimal.ZERO) <= 0) {
+                        throw new IllegalArgumentException("Errore nell'input!");
+                    }
 
-                if (!riv.emailValidator(email_tra)) {
-                    throw new IllegalArgumentException("Errore nell'input!");
-                }
+                    if (!riv.emailValidator(email_tra)) {
+                        throw new IllegalArgumentException("Errore nell'input!");
+                    }
 
-                if (data_tra.matches("\\d+(\\.\\d{1,2})?") && riv.emailExist(email_tra)) {
-                    accFunction.transferCash(new BigDecimal(data_tra), email, email_tra);
-                    cashTotal.setText("Cash: " + getCash(email).toString());
-                } else {
-                    throw new IllegalArgumentException("Errore nell'input!");
+                    if (data_tra.matches("\\d+(\\.\\d{1,2})?") && riv.emailExist(email_tra)) {
+                        accFunction.transferCash(new BigDecimal(data_tra), email, email_tra);
+                        cashTotal.setText("Cash: " + getCash(email).toString());
+                    } else {
+                        throw new IllegalArgumentException("Errore nell'input!");
+                    }
+                } catch (IllegalArgumentException err) {
+                    System.out.println(err.getMessage());
+                    JOptionPane.showMessageDialog(null, err.getMessage());
                 }
-            } catch (IllegalArgumentException err) {
-                System.out.println(err.getMessage());
-                JOptionPane.showMessageDialog(null, err.getMessage());
+            } else {
+                System.out.println("Non puoi lasciare vuoto il campo");
             }
+            transfer_number.setText("");
+            trasnsfer_email.setText("");
         });
 
         JTextField recharge_number = new JTextField();
@@ -179,22 +195,27 @@ public class AccountPage {
         button_recharge.setForeground(color.iceWhite);
         button_recharge.setBackground(color.electricBlue);
         button_recharge.addActionListener(e -> {
-            try {
-                String data_rec = recharge_number.getText();
-                if (data_rec == null || data_rec.isEmpty()) {
-                    throw new IllegalArgumentException("Errore nell'input!");
-                }
+            if (!recharge_number.getText().isEmpty()) {
+                try {
+                    String data_rec = recharge_number.getText();
+                    if (data_rec == null || data_rec.isEmpty()) {
+                        throw new IllegalArgumentException("Errore nell'input!");
+                    }
 
-                if (data_rec.matches("\\d+(\\.\\d{1,2})?")) {
-                    accFunction.recharge(new BigDecimal(data_rec), email);
-                    cashTotal.setText("Cash: " + getCash(email).toString());
-                } else {
-                    throw new IllegalArgumentException("Errore nell'input!");
+                    if (data_rec.matches("\\d+(\\.\\d{1,2})?")) {
+                        accFunction.recharge(new BigDecimal(data_rec), email);
+                        cashTotal.setText("Cash: " + getCash(email).toString());
+                    } else {
+                        throw new IllegalArgumentException("Errore nell'input!");
+                    }
+                } catch (IllegalArgumentException err) {
+                    System.out.println(err.getMessage());
+                    JOptionPane.showMessageDialog(null, err.getMessage());
                 }
-            } catch (IllegalArgumentException err) {
-                System.out.println(err.getMessage());
-                JOptionPane.showMessageDialog(null, err.getMessage());
+            } else {
+                System.out.println("Non puoi lasciare vuoto il campo");
             }
+            recharge_number.setText("");
         });
 
         JButton logout_button = new JButton("Log out");

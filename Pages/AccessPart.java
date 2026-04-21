@@ -1,6 +1,7 @@
 package Pages;
 import javax.swing.*;
 
+import Function.AccountFunction;
 import security.RegexInputValidator;
 import style.Colors;
 
@@ -11,6 +12,7 @@ public class AccessPart {
     private final String[] accountType = {"Bank", "People"};
     private final RegexInputValidator validator = new RegexInputValidator();
     private final AccountPage userPage = new AccountPage();
+    private final AccountFunction accFunc = new AccountFunction();
     private final BankAccount bankAcc = new BankAccount();
 
     public void accessPart(JPanel panel, JPanel mainPanel) {
@@ -77,13 +79,18 @@ public class AccessPart {
             String pasw_val = new String(password.getPassword());
             try {
                 boolean val = validator.checkerDatas(email.getText(), pasw_val, accType.getSelectedItem().toString());
-                System.out.println("Dati checkkati correttamente!");
-                if ("People".equals(accType.getSelectedItem()) && val) {
-                    userPage.accountPage(panel, mainPanel, email.getText());
-                } else if ("Bank".equals(accType.getSelectedItem()) && val) {
-                    bankAcc.bankAccount(panel, mainPanel, email.getText());
+                boolean acc = accFunc.blockedAccount(email.getText());
+                if (!acc) {
+                    System.out.println("Dati checkkati correttamente!");
+                    if ("People".equals(accType.getSelectedItem()) && val) {
+                        userPage.accountPage(panel, mainPanel, email.getText());
+                    } else if ("Bank".equals(accType.getSelectedItem()) && val) {
+                        bankAcc.bankAccount(panel, mainPanel, email.getText());
+                    } else {
+                        throw new IllegalArgumentException("Errore nella scelta del tipo dell'utente!");
+                    }
                 } else {
-                    throw new IllegalArgumentException("Errore nella scelta del tipo dell'utente!");
+                    System.out.println("Account bloccato dalla banca!");
                 }
             } catch (IllegalArgumentException ex) {
                 System.out.println("Errore: Input non valido");

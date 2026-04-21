@@ -3,6 +3,7 @@ package Function;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import DataBase.DBconnection;
@@ -63,6 +64,17 @@ public class AccountFunction {
             }
         } catch (SQLException e) {
             System.out.println("Pagamento non riuscito!");
+        }
+    }
+
+    public boolean blockedAccount(String email) {
+        String query = "SELECT 1 FROM users WHERE email = ? AND active = true";
+        try (Connection conn = db.getConn(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, email);
+            ResultSet ris = stmt.executeQuery();
+            return ris.next();
+        } catch (SQLException e) {
+            throw new RuntimeException("[Errore] errore col db");
         }
     }
 

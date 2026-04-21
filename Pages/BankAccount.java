@@ -101,7 +101,16 @@ public class BankAccount {
             String pasw_val = new String(password.getPassword());
             try {
                 boolean val = checker.checkerDatasRegistration(email.getText(), pasw_val, accType.getSelectedItem().toString());
-                if (val) {
+                boolean existingUser = false;
+
+                try {
+                    existingUser = accFunction.userAlreadyExist(email.getText());
+                } catch(RuntimeException err) {
+                    System.out.println("Errore!");
+                    throw new IllegalArgumentException("Input non valido");
+                }
+
+                if (val && !existingUser) {
                     try {
                         reg.registerUser(email.getText(), pasw_val, accType.getSelectedItem().toString());
                         System.out.println("Utente registrato!");
@@ -112,7 +121,15 @@ public class BankAccount {
             } catch (IllegalArgumentException er) {
                 System.out.println("Input non valido");
             }
+            email.setText("");
+            password.setText("");
         });
+
+        JTextField email_to_delete = new JTextField();
+        email_to_delete.setAlignmentX(Component.CENTER_ALIGNMENT);
+        email_to_delete.setMaximumSize(new Dimension(200, 30));
+        email_to_delete.setForeground(color.iceWhite);
+        email_to_delete.setBackground(color.electricBlue);
 
         JButton button_delete = new JButton("Delete account");
         button_delete.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -120,8 +137,20 @@ public class BankAccount {
         button_delete.setForeground(color.iceWhite);
         button_delete.setBackground(color.electricBlue);
         button_delete.addActionListener(e -> {
-            accFunction.delete();
+            if (!email_to_delete.getText().isEmpty()) {
+                String email_del = email_to_delete.getText();
+                accFunction.delete(email_del);
+                email_to_delete.setText("");
+            } else {
+                System.out.println("Non puoi lasciare vuoto il campo");
+            }
         });
+
+        JTextField email_to_block = new JTextField();
+        email_to_block.setAlignmentX(Component.CENTER_ALIGNMENT);
+        email_to_block.setMaximumSize(new Dimension(200, 30));
+        email_to_block.setForeground(color.iceWhite);
+        email_to_block.setBackground(color.electricBlue);
 
         JButton button_block = new JButton("Block account");
         button_block.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -129,16 +158,34 @@ public class BankAccount {
         button_block.setForeground(color.iceWhite);
         button_block.setBackground(color.electricBlue);
         button_block.addActionListener(e -> {
-            accFunction.block();
+            if (!email_to_block.getText().isEmpty()) {
+                String email_blo = email_to_block.getText();
+                accFunction.block(email_blo);
+                email_to_block.setText("");
+            } else {
+                System.out.println("Non puoi lasciare vuoto il campo");
+            }
         });
 
-        JButton button_view = new JButton("View account");
+        JTextField email_to_unlock = new JTextField();
+        email_to_unlock.setAlignmentX(Component.CENTER_ALIGNMENT);
+        email_to_unlock.setMaximumSize(new Dimension(200, 30));
+        email_to_unlock.setForeground(color.iceWhite);
+        email_to_unlock.setBackground(color.electricBlue);
+
+        JButton button_view = new JButton("Unlock account");
         button_view.setAlignmentX(Component.CENTER_ALIGNMENT);
         button_view.setMaximumSize(new Dimension(200, 30));
         button_view.setForeground(color.iceWhite);
         button_view.setBackground(color.electricBlue);
         button_view.addActionListener(e -> {
-            accFunction.view();
+            if (!email_to_unlock.getText().isEmpty()) {
+                String email_unl = email_to_unlock.getText();
+                accFunction.unblock(email_unl);
+                email_to_unlock.setText("");
+            } else {
+                System.out.println("Non puoi lasciare vuoto il campo");
+            }
         });
 
         JButton logout_button = new JButton("Log out");
@@ -169,10 +216,16 @@ public class BankAccount {
         mainPanel.add(Box.createVerticalStrut(5));
         mainPanel.add(create_button);
         mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(email_to_block);
+        mainPanel.add(Box.createVerticalStrut(5));
         mainPanel.add(button_block);
         mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(email_to_delete);
+        mainPanel.add(Box.createVerticalStrut(5));
         mainPanel.add(button_delete);
         mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(email_to_unlock);
+        mainPanel.add(Box.createVerticalStrut(5));
         mainPanel.add(button_view);
         mainPanel.add(Box.createVerticalStrut(40));
         mainPanel.add(logout_button);
