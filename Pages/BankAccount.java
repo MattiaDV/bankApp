@@ -107,18 +107,26 @@ public class BankAccount {
                     existingUser = accFunction.userAlreadyExist(email.getText());
                 } catch(RuntimeException err) {
                     System.out.println("Errore!");
-                    throw new IllegalArgumentException("Input non valido");
+                    return;
+                }
+
+                if (existingUser) {
+                    JOptionPane.showMessageDialog(null, "L'utente esiste già");
+                    return;
                 }
 
                 if (val && !existingUser) {
                     try {
                         reg.registerUser(email.getText(), pasw_val, accType.getSelectedItem().toString());
+                        JOptionPane.showMessageDialog(null, "Utente registrato con successo");
                         System.out.println("Utente registrato!");
                     } catch (Exception err) {
+                        JOptionPane.showMessageDialog(null, "Impossibile registrare utente");
                         System.out.println("Impossibile registrare");
                     }
                 }
             } catch (IllegalArgumentException er) {
+                JOptionPane.showMessageDialog(null, "Input non valido");
                 System.out.println("Input non valido");
             }
             email.setText("");
@@ -140,8 +148,10 @@ public class BankAccount {
             if (!email_to_delete.getText().isEmpty()) {
                 String email_del = email_to_delete.getText();
                 accFunction.delete(email_del);
+                JOptionPane.showMessageDialog(null, "Utente " + email_del + " eliminato");
                 email_to_delete.setText("");
             } else {
+                JOptionPane.showMessageDialog(null, "Non puoi lasciare vuoto il campo");
                 System.out.println("Non puoi lasciare vuoto il campo");
             }
         });
@@ -161,8 +171,10 @@ public class BankAccount {
             if (!email_to_block.getText().isEmpty()) {
                 String email_blo = email_to_block.getText();
                 accFunction.block(email_blo);
+                JOptionPane.showMessageDialog(null, "Utente " + email_blo + " bloccato");
                 email_to_block.setText("");
             } else {
+                JOptionPane.showMessageDialog(null, "Non puoi lasciare vuoto il campo");
                 System.out.println("Non puoi lasciare vuoto il campo");
             }
         });
@@ -182,8 +194,10 @@ public class BankAccount {
             if (!email_to_unlock.getText().isEmpty()) {
                 String email_unl = email_to_unlock.getText();
                 accFunction.unblock(email_unl);
+                JOptionPane.showMessageDialog(null, "Utente " + email_unl + " sbloccato");
                 email_to_unlock.setText("");
             } else {
+                JOptionPane.showMessageDialog(null, "Non puoi lasciare vuoto il campo");
                 System.out.println("Non puoi lasciare vuoto il campo");
             }
         });
